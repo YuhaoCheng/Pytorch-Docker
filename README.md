@@ -12,6 +12,7 @@ The Docker file helps to build a docker containing the PyTorch environment
 ### To-do List
 - [x] Make the general docker file
 - [x] Change the way to determine the version of packages
+- [ ] Improve the methods to run the docker
 - [ ] Add the Produce environment Docker
   - [x] Make the general environment
   - [ ] Add `Horovod` 

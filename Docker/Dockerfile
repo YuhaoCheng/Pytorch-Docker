@@ -3,7 +3,7 @@ FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 
 # Make the vars
 # user
-ARG USER_ID=1000
+ARG USER_ID=1000 
 ARG USER_NAME='appuser'
 # conda name
 ARG CONDA_NAME='pose'
@@ -20,7 +20,7 @@ RUN apt-get update --fix-missing && \
     apt-get install -y software-properties-common && \
     add-apt-repository -r ppa:kirillshkrogalev/ffmpeg-next && \
     apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion ffmpeg vim tmux && \
+    apt-get install -y wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion ffmpeg vim tmux sudo && \
     apt-get clean 
 
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \

@@ -3,5 +3,5 @@
 DOCKERFILE_PATH='Docker'
 DACKER_NAME='pose'
 DOCKER_TAG='latest'
-cd $DOCKER_PATH
+cd $DOCKERFILE_PATH
 nvidia-docker build -t $DACKER_NAME:$DOCKER_TAG .

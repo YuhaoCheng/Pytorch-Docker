@@ -1,5 +1,5 @@
 # Base on the cuda101
-FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu16.04
 
 # Make the vars
 # user
@@ -16,7 +16,8 @@ ARG CUDATOOLKIT='10.1'
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get update --fix-missing && \
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list && apt-get clean && apt-get update \
+    && apt-get update --fix-missing && \
     apt-get install -y software-properties-common && \
     add-apt-repository -r ppa:kirillshkrogalev/ffmpeg-next && \
     apt-get update --fix-missing && \

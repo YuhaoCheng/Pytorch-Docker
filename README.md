@@ -6,7 +6,6 @@ The Docker file helps to build a docker containing the PyTorch environment
 ### Introduction
 
 - In order to make it easy to use, we create the docker image file
-
 - `.condarc` is the channels of `conda`, we choose `tuna` source. Users can change it. 
 
 ### To-do List
@@ -16,12 +15,24 @@ The Docker file helps to build a docker containing the PyTorch environment
 - [ ] Add the Produce environment Docker
   - [x] Make the general environment
   - [ ] Add `Horovod` 
-- [ ] Make be able to use the `tmux` in develop docker
+- [x] Make be able to use the `tmux` in develop docker
 - [ ] Change the general mount methods, which will mount the whole host drives to the container
 - [ ] Make the ssh link
 
+### Usage:
 
-### Usage
+We provide the multi steps to create the docker images. The structure of the folders are as following:
+
+```shell
+---ROOT
+ |--base-pytorch
+ |--experiments
+ |--produce
+ |--inferace
+```
+
+- `base-pyotrch` contains the fundamental environments
+- 
 
 ##### Build the docker image
 

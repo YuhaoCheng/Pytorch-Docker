@@ -2,26 +2,34 @@
 FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu16.04
 
 # Make the vars
-# user
-ARG USER_ID=1000 
-ARG USER_NAME='appuser'
-# conda name
-ARG CONDA_NAME='pose'
 # environment names
 ARG PYTHON='3.7'
 ARG PYTORCH='1.6'
+ARG CONDA_VERSION='4.8.5'
 ARG CUDATOOLKIT='10.1'
 
 # Build the miniconda3
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-ENV PATH /opt/conda/bin:$PATH
+# change the source of the packages
+# RUN echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64 ./" >> /etc/apt/sources.list.d/cuda.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse" >> /etc/apt/sources.list&& \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse" >> /etc/apt/sources.list&& \
+#     echo "deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse" >> /etc/apt/sources.list && \
+#     echo "deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list 
+# RUN apt-get clean
 
-RUN rm /etc/apt/sources.list.d/nvidia-ml.list && apt-get clean && apt-get update \
-    && apt-get update --fix-missing && \
+RUN apt-get update --fix-missing && \
     apt-get install -y software-properties-common && \
     add-apt-repository -r ppa:kirillshkrogalev/ffmpeg-next && \
     apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion ffmpeg vim tmux sudo && \
+    apt-get install -y wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion ffmpeg vim curl cmake && \
+    apt-get install -y tmux && \
+    apt-get install -y sudo && \
     apt-get clean 
 
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
@@ -35,25 +43,23 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     /opt/conda/bin/conda clean -afy
 
+# add the user
+# RUN useradd -m --no-log-init --system  --uid ${USER_ID} ${USER_NAME} -g sudo \
+#     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+#     && groupadd -g ${USER_ID} ${USER_NAME} \
+#     && chown -R ${USER_NAME}:${USER_NAME} /opt/conda 
 
-RUN useradd -m --no-log-init --system  --uid ${USER_ID} ${USER_NAME} -g sudo \
-    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-    && groupadd -g ${USER_ID} ${USER_NAME} \
-    && chown -R ${USER_NAME}:${USER_NAME} /opt/conda 
+ENV PATH /opt/conda/bin:$PATH
 
-USER ${USER_NAME}
-WORKDIR /home/${USER_NAME}
-COPY .condarc /home/${USER_NAME}
+# USER ${USER_NAME}
+WORKDIR /root/
+COPY .condarc /root/
 
 # Create the environment and install the pytorch1.6
 RUN conda create -n ${CONDA_NAME} python=${PYTHON} \
-    && /bin/bash -c "source activate ${CONDA_NAME}" \
+    && /bin/bash -c "source activate $CONDA_NAME" \
     && conda install pytorch==${PYTORCH} torchvision cudatoolkit=${CUDATOOLKIT} -c pytorch 
 
-# Get the Github
-# Follow  the instructions on the Readme
+# # Get the Github
+# # Follow  the instructions on the Readme
 
-WORKDIR /home/${USER_NAME}
-# Inital 
-# CMD conda run -n pyanomaly
-# ENTRYPOINT conda run -n pyanomaly

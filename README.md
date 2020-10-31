@@ -7,6 +7,7 @@ The Docker file helps to build a docker containing the PyTorch environment
 
 - In order to make it easy to use, we create the docker image file
 - `.condarc` is the channels of `conda`, we choose `tuna` source. Users can change it. 
+- All the images are using `ubuntu`  and `miniconda`
 
 ### To-do List
 - [x] Make the general docker file
@@ -27,12 +28,28 @@ We provide the multi steps to create the docker images. The structure of the fol
 ---ROOT
  |--base-pytorch
  |--experiments
- |--produce
  |--inferace
+ |--produce
 ```
 
 - `base-pyotrch` contains the fundamental environments
-- 
+- `experiments` contains some really useful tools in doing the AI experiments
+- `inference` is basically same as the `base-pytorch`, while we remove some not used packages in testing process
+- `produce` is used in the real applications 
+
+
+
+##### Pull the image from docker hub
+
+We provide some images on the docker hub, you can directly download these images. For example, you can pull the image such as :
+
+```
+docker pull roviocyh/pytorch16-cu101:latest
+```
+
+if you can download the image, you can skip the building part. If not, you should build the image by yourself. 
+
+**Note:** The dockerfile in the github is always the latest version, if you want to use the previous version, you should download from the docker hub. 
 
 ##### Build the docker image
 

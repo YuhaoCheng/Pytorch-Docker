@@ -1,15 +1,13 @@
 # PyTorch-Docker
 The Docker file helps to build a docker containing the PyTorch environment
 
-## Docker 
-
-### Introduction
+## Introduction
 
 - In order to make it easy to use, we create the docker image file
 - `.condarc` is the channels of `conda`, we choose `tuna` source. Users can change it. 
 - All the images are using `ubuntu`  and `miniconda`
 
-### To-do List
+## To-do List
 - [x] Make the general docker file
 - [x] Change the way to determine the version of packages
 - [ ] Improve the methods to run the docker
@@ -20,24 +18,37 @@ The Docker file helps to build a docker containing the PyTorch environment
 - [ ] Change the general mount methods, which will mount the whole host drives to the container
 - [ ] Make the ssh link
 
-### Usage:
 
-We provide the multi steps to create the docker images. The structure of the folders are as following:
+## Structure
+The structure of the folders are as following:
 
 ```shell
 ---ROOT
- |--base-pytorch
- |--experiments
- |--inferace
- |--produce
+ |--Dockerfiles
+ 	|--DockerBasePytorch
+ 	|--DockerExperiments
+ 	|--DockerInferace
+ 	|--DockerProduce
+ |--shellTools
+ |--pythonTools
 ```
+- `DockerBasePyotrch` contains the fundamental environments
+- `DockerExperiments` contains some really useful tools in doing the AI experiments
+- `DockerInference` is basically same as the `base-pytorch`, while we remove some not used packages in testing process
+- `DockerProduce` is used in the real applications 
 
-- `base-pyotrch` contains the fundamental environments
-- `experiments` contains some really useful tools in doing the AI experiments
-- `inference` is basically same as the `base-pytorch`, while we remove some not used packages in testing process
-- `produce` is used in the real applications 
+## Image Name
+
+The image is  named as the following rules:
+
+- names are: `basepytorch`, `experiments`, `inferace`, `produce`
+
+- tags are: `pytorchXX_cuXX`
+
+  Bas
 
 
+###  Usage:
 
 ##### Pull the image from docker hub
 

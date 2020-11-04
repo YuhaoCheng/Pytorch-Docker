@@ -12,7 +12,7 @@ The Docker file helps to build a docker containing the PyTorch environment
 - `docker`
 - `nvidia-docker`
 
-
+Note: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html
 
 ## To-do List
 - [x] Make the general docker file

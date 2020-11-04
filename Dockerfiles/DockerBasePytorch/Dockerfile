@@ -7,6 +7,7 @@ ARG PYTHON='3.7'
 ARG PYTORCH='1.6'
 ARG CONDA_VERSION='4.8.5'
 ARG CUDATOOLKIT='10.1'
+ARG CONDA_NAME='pytorch'
 
 
 RUN apt-get update --fix-missing && \
@@ -29,11 +30,6 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     /opt/conda/bin/conda clean -afy
 
-# add the user
-# RUN useradd -m --no-log-init --system  --uid ${USER_ID} ${USER_NAME} -g sudo \
-#     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-#     && groupadd -g ${USER_ID} ${USER_NAME} \
-#     && chown -R ${USER_NAME}:${USER_NAME} /opt/conda 
 
 ENV PATH /opt/conda/bin:$PATH
 

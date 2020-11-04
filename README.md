@@ -7,6 +7,13 @@ The Docker file helps to build a docker containing the PyTorch environment
 - `.condarc` is the channels of `conda`, we choose `tuna` source. Users can change it. 
 - All the images are using `ubuntu`  and `miniconda`
 
+## Requirements
+
+- `docker`
+- `nvidia-docker`
+
+
+
 ## To-do List
 - [x] Make the general docker file
 - [x] Change the way to determine the version of packages

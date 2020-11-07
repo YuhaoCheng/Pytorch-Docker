@@ -39,7 +39,8 @@ COPY .condarc /root/
 
 # Create the environment and install the pytorch1.6
 RUN conda create -n ${CONDA_NAME} python=${PYTHON} \
-    && /bin/bash -c "source activate $CONDA_NAME" \
+    # && /bin/bash -c "source activate $CONDA_NAME" \
+    && source activate $CONDA_NAME \
     && conda install pytorch==${PYTORCH} torchvision cudatoolkit=${CUDATOOLKIT} -c pytorch 
 
 # # Get the Github
